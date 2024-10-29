@@ -12,3 +12,4 @@ if (' ') console.log('\' \'입니다!');
 if ('-100') console.log('-100입니다!');
 if ([1,2,3]) console.log('[1,2,3]입니다');
 if (function () {}) console.log(`함수입니다`);
+

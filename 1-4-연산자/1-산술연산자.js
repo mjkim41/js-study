@@ -1,8 +1,11 @@
 // js는 나누셈을 수행할 때 실수 나누셈을 수행 (소수점이 도출됨)
 console.log(27 / 5);
 
-// 나눗셈의 몫만 구하기
+// -- 나눗셈의 몫만 구하기
 console.log(Math.floor(27/5));
+
+console.log(27/5);
+
 
 // -- 나머지 연산 : %
 console.log(27 % 5);
@@ -10,7 +13,7 @@ console.log(27 % 5);
 // 뒤의 숫자가 더 크면 앞의 숫자가 그대로 나머지 몫은 0
 console.log(8 % 10); // -> 출력값 : 8
 
-// -- 0으로 나누면 infinity 
+// -- 0으로 나머지 반환하면 : NaN (FYI. 0으로 나누기하면 : ifinity) 
 console.log(8 % 0); 
 
 // == 제곱 연산 (ES6+) : **

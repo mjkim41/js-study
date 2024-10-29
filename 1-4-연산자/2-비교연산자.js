@@ -32,6 +32,6 @@ console.log(password === 'abc1234');
 // **** 문자 비교
 console.log('a' > 'A'); // 소문자 > 대문자 
 console.log('A' < 'C'); //  A < C
-console.log('가' < '나'); //  가 > 나
+console.log('가' < '나'); //  가 < 나
 console.log('ace' > 'ade'); // acde < ade
 console.log('A' < '가'); // 한글이 이김
