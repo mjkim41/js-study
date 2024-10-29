@@ -10,17 +10,20 @@ if (true) {
   var num = 20;
   console.log('if 안에 num: ', num); // 20
 }
-
-
 console.log('if 밖의 number: ', num); // 20
+
 let num1 = 10;
 if (true) {
   let num1 = 20;
   console.log('if 안에 num: ', num); // 20
 }
-
 console.log('if 밖의 number: ', num1); // 10
 
 // 3. hoisting : 변수 선언을 자동으로 위로 끌어올림
-console.log(ironman);
 let ironman = '토니 스타크'; // undefined
+console.log(ironman);
+
+console.log(test);
+var test = 1.3;
+
+console.log(10/3);
