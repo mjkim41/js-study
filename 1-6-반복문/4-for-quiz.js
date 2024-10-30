@@ -11,5 +11,3 @@ for(let i = 1; i <= targetNumber; i++) {
   }    
 }
 alert(`\n약수의 개수는 ${count}개입니다.`);
-
-
