@@ -35,11 +35,9 @@ article1.isAdmin = false;
 // 프로퍼티 삭제
 delete article1.dislikeCount;
 
-console.log(article1);
 
 //객체의 중첩구조
 //예시 : 게시판
-
 
 let articles = {
   totalCount: 25578, //총 게시물 수

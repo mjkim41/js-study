@@ -6,6 +6,7 @@ let puppy1 = {
   // ''를 쓰면 가능
 };
 
+
 let puppy2 = {
   name: '초코',
   color: 'brown',
