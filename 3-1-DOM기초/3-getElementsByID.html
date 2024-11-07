@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li id="apple">
+      <p>사과</p>
+    </li>
+    <li id="banana">바나나</li>
+    <li id="grape">포도</li>
+    <li id="peach">복숭아</li>
+  </ul>
+
+  <script>
+    const $apple = document.getElementById('apple');
+    console.log($apple);
+    console.log(typeof $apple); // 객체
+    console.log($apple.textContent);
+    $apple.textContent = '내용을 수정하였습니다';
+
+    // 객체 프로퍼티 추가
+    $apple.newPropertyKey = '빨간사과, 노란사과';
+
+    // 객체 삭제
+    delete $apple.newPropertyKey
+
+    
+    const $peach = document.getElementById('peach');
+    /* 
+
+    JavaScript에서는 DOM의 스타일 속성(예: font-size)이 자동으로 camelCase 형태로 변환됨.
+    (브라우저가 내부적으로 처리하는 부분)
+    단, 대괄호([])표기 법에서는 두 방식 모두 가능
+
+    */
+    $peach.style['fontSize'] = '50px';
+    $peach.style.backgroundColor = '700';
+    $peach.style['color'] = 'red';
+
+    // id가 grape인 요소객체를 가져와서 
+    // 배경색상을 violet으로 조작
+    const $grape = document.getElementById('grape');
+    $grape.style.backgroundColor = 'violet';
+
+  </script>
+</body>
+</html>

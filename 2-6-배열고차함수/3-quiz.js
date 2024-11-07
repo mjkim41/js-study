@@ -1,126 +1,99 @@
-const traders = [
+const userList = [
   {
-    trader: {
-      name: '김철수', // traders[0].trader.name
-      city: '대전',
-    },
-    year: 2023, // traders[0].year
-    value: 500000,
+    account: 'abc1234',
+    userName: '대길이',
+    job: '추노',
+    address: '서울',
+    hobbys: ['수영', '축구', '테니스'],
+    salary: 5400000,
+    age: 35,
   },
   {
-    trader: {
-      name: '박영희',
-      city: '서울',
-    },
-    year: 2022, // traders[1].year
-    value: 600000,
+    account: 'banana',
+    userName: '빠나나',
+    job: '과일',
+    address: '서울',
+    hobbys: ['푸드파이팅', '테니스'],
+    salary: 9700000,
+    age: 18,
   },
   {
-    trader: {
-      name: '김철수',
-      city: '대전',
-    },
-    year: 2022,
-    value: 1200000,
+    account: 'park1234',
+    userName: '주차왕',
+    job: '발렛파킹',
+    address: '경기',
+    hobbys: ['족구', '축구', '테니스', '영화감상'],
+    salary: 3900000,
+    age: 56,
   },
   {
-    trader: {
-      name: '박영희',
-      city: '서울',
-    },
-    year: 2023,
-    value: 650000,
-  },
-  {
-    trader: {
-      name: '뽀로로',
-      city: '부산',
-    },
-    year: 2023,
-    value: 800000,
-  },
-  {
-    trader: {
-      name: '루피',
-      city: '대전',
-    },
-    year: 2022,
-    value: 780000,
-  },
-  {
-    trader: {
-      name: '김철수',
-      city: '대전',
-    },
-    year: 2023,
-    value: 1500000,
-  },
-  {
-    trader: {
-      name: '김철수',
-      city: '대전',
-    },
-    year: 2022,
-    value: 2500000,
-  },
-  {
-    trader: {
-      name: '김철수',
-      city: '대전',
-    },
-    year: 2022,
-    value: 500000,
+    account: 'fire',
+    userName: '불꽃남자카리스마',
+    job: '게이머',
+    address: '서울',
+    hobbys: ['독서', '테니스'],
+    salary: 1900000,
+    age: 42,
   },
 ];
 
-// 연습 1: 2022년에 발생한 모든 거래를 찾아
-//   거래자 정보(이름, 도시)를 배열에 매핑해주세요
-const traderIn2022 = traders
-  .filter((transaction) => transaction.year === 2022)
-  .map((transaction) => transaction.trader);
+// findIndex() : 해당 조건에 맞는 처음 발견한 객체데이터의 인덱스를 찾는 것
+// ex) 이름이 주차왕인 객체의 인덱스는 몇번인가?
+// [1,2,3,4] || ['a', 'b', 'c']
 
-console.log(traderIn2022);
+// const idx1 = ['a', 'b', 'c'].indexOf('d');
+// console.log(`idx1: ${idx1}`);
 
+function findIndex(callbackFn) {
+  for (let i = 0; i < userList.length; i++) {
+    if (callbackFn(userList[i])) {
+      return i;
+    }
+  }
+  return -1;
+}
 
+const idx2 = userList.findIndex((user) => user.job === '과일');
+console.log(`idx2: ${idx2}`);
 
-// 연습 2: 거래자가 근무하는 모든 도시이름을 배열에 담아주세요.
-console.log('=========================');
-const mappedCities = traders.map(trs => trs.trader.city);
-// console.log(mappedCities);
+// find(): 배열에서 조건에 일치하는 처음 발견한 객체를 리턴
+// 중복이 없는 데이터로 찾아야 정확하게 찾아냄
 
-// 객체가 아닌 단순데이터 중복제거
-const cities = [...new Set(mappedCities)];
-console.log(cities);
+function myFind(callbackFn) {
+  const index = findIndex(callbackFn);
+  return index !== -1 ? userList[index] : null;
+}
 
+// 이름이 빠나나인 객체를 찾아주세요
+const foundUser = userList.find(user => user.userName === '빠나나');
+console.log(foundUser);
 
-// 연습 3: 대전에 근무하는
-// 모든 거래자를 찾아 거래자정보(이름, 도시)를 배열에 매핑해주세요.
-console.log('=========================');
+console.log('====================');
 
-const traderInDeajeon = traders
-  .filter((transaction) => transaction.trader.city === '대전')
-  .map((transaction) => transaction.trader);
+// some() : 배열에서 특정 조건에 맞는 데이터가 하나라도 있는지 여부
+// every() : 배열에서 모든 데이터가 특정 조건에 맞는지 체크
 
-console.log(traderInDeajeon);
+function mySome(callbackFn) {
+  for (const user of userList) {
+    if (callbackFn(user)) {
+      return true;
+    }
+  }
+  return false;
+}
+function myEvery(callbackFn) {
+  for (const user of userList) {
+    if (!callbackFn(user)) {
+      return false;
+    }
+  }
+  return true;
+}
 
-// 연습 4: 모든 거래자의 이름을 배열에 모아주세요.
-const allTraderNames = traders.map((trs) => trs.trader.name);
-// console.log(mappedCities);
+// 급여가 500만원 이상인 회원이 하나라도 있는가? - some
+const flag1 = userList.some(user => user.salary >= 5000000);
+console.log(`flag1: ${flag1}`);
 
-// 객체가 아닌 단순데이터 중복제거
-const names = [...new Set(allTraderNames)];
-console.log(names);
-
-
-// 연습 5: 서울에 사는 거래자의 모든 거래액의 총합 출력.
-// let total = 0;
-// traders
-//   .filter(trs => trs.trader.city === '서울')
-//   .map(trs => trs.value)
-//   .forEach(value => total += value);
-
-const total = traders
-  .filter((trs) => trs.trader.city === '서울')
-  .reduce((totalValue, trs) => totalValue + trs.value, 0);
-
-console.log(`총액: ${total}`);
+// 모든 회원들이 서울에 삽니까?
+const flag2 = userList.every(user => user.address === '서울');
+console.log(`flag2: ${flag2}`);

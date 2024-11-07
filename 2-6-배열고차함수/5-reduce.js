@@ -1,155 +1,107 @@
 
-const nums = [10, 20, 30, 40, 50];
+// 배열 데이터 정렬하기
+const nums = [6, 11, 3, 7, 9, 10, 27, 2, 100, 4, 1];
+console.log(nums);
 
-// reduce() : 배열의 각 요소들을 주어진 콜백에 맞게 합산, 누적하여
-//            단 하나의 결과값을 반환
+nums.sort((a, b) => a - b); // 오름차
+console.log(nums);
 
-/*
-  reduce에 전달되는 콜백
-  - callback(accumulator, currentValue)
-  1. accumulator: 어떤 데이터를 계속 누적해 나가는 변수
-  2. currentValue: 현재 루프회차에서 사용할 데이터
+nums.sort((a, b) => b - a); // 내림차
+console.log(nums);
 
-  -> reduce는 반복을 실행할 때마다 currentValue를 accumulator에
-     return 조건에 맞게 누적
+// 문자 정렬
+console.log('=============');
 
-  -> reduce는 마지막에 accumulator의 리턴값을 리턴
-*/
-const c = nums.reduce(function (a, b) {
-  // console.log(`a: ${a}`);
-  // console.log(`b: ${b}`);
-  // console.log('==========');
-  return a + b; // 다음 accumulator의 값
-}, 0);
+const foods = ['짜장면', '짬뽕', '가재튀김', '호빵', '닭강정'];
 
-/*
-  reduce의 콜백 다음 파라미터는 initialValue를 의미하며
-  반복문의 accumulator시작값을 0번 인덱스에서 initialValue로 교체함
-  따라서 initialValue를 0으로 두고 return a + b;
+// 앞에데이터가 뒷데이터보다 크면 자리를 바꾸는데
+// 양수일 때 자리가 바뀌도록 설계되어 있음.
+foods.sort((a, b) => {
+  if (a > b) return 1;
+  else if (a < b) return -1;
+  else return 0;
+});
 
-  0 + 10 + 20 + 30 + 40 + 50
-
-  initialValue를 생략하면
-
-  10 + 20 + 30 + 40 + 50
-*/
+console.log(foods);
 
 
 
-// const c = nums.reduce((a, b) => a + b);
-
-// console.log(`c: ${c}`);
 
 
-const appleBasket = [
+// 1회차
+// [ 10, 3, 6, 9, 2 ]
+// [ 3, 10, 6, 9, 2 ]
+// [ 3, 6, 10, 9, 2 ]
+// [ 3, 6, 9, 10, 2 ]
+// [ 3, 6, 9, 2, 10 ]
+
+// 2회차 
+// [ 3, 6, 9, 2, 10 ]
+// [ 3, 6, 9, 2, 10 ]
+// [ 3, 6, 9, 2, 10 ]
+// [ 3, 6, 2, 9, 10 ]
+
+// 3회차
+// [ 3, 6, 2, 9, 10 ]
+// [ 3, 6, 2, 9, 10 ]
+// [ 3, 2, 6, 9, 10 ]
+
+// 4회차
+// [ 3, 2, 6, 9, 10 ]
+// [ 2, 3, 6, 9, 10 ]
+
+
+
+
+const userList = [
   {
-    color: 'green',
-    sweet: 13,
+    account: 'abc1234',
+    userName: '대길이',
+    job: '추노',
+    address: '서울',
+    hobbys: ['수영', '축구', '테니스'],
+    salary: 5400000,
+    age: 35,
   },
   {
-    color: 'red',
-    sweet: 14,
+    account: 'banana',
+    userName: '빠나나',
+    job: '과일',
+    address: '서울',
+    hobbys: ['푸드파이팅', '테니스'],
+    salary: 9700000,
+    age: 18,
   },
   {
-    color: 'red',
-    sweet: 11,
+    account: 'park1234',
+    userName: '주차왕',
+    job: '발렛파킹',
+    address: '경기',
+    hobbys: ['족구', '축구', '테니스', '영화감상'],
+    salary: 3900000,
+    age: 56,
   },
   {
-    color: 'green',
-    sweet: 6,
-  },
-  {
-    color: 'green',
-    sweet: 7,
-  },
-  {
-    color: 'yellow',
-    sweet: 7,
-  },
-  {
-    color: 'yellow',
-    sweet: 8,
-  },
-  {
-    color: 'green',
-    sweet: 9,
-  },
-  {
-    color: 'yellow',
-    sweet: 17,
+    account: 'fire',
+    userName: '불꽃남자카리스마',
+    job: '게이머',
+    address: '서울',
+    hobbys: ['독서', '테니스'],
+    salary: 1900000,
+    age: 42,
   },
 ];
 
-// 사과 바구니에 있는 모든 사과들의 당도를 합산해주세요
-// let totalSweet = 0;
-// for (const apple of appleBasket) {
-//   totalSweet += apple.sweet;
-// }
+// 나이 적은 순으로 정렬 (나이 오름차)
+// userList.sort((a, b) => a.age - b.age);
 
-// const totalSweet = appleBasket.reduce((acc, curr) => {
-//   console.log(`acc: `, acc);
-//   console.log(`curr: `, curr);
-//   return acc + curr.sweet;
-// }, 0);
+// 급여가 높은 순 (급여 내림차)
+// userList.sort((a, b) => b.salary - a.salary);
 
-const totalSweet = appleBasket.reduce((acc, curr) => acc + curr.sweet, 0);
-
-console.log(`totalSweet: ${totalSweet}`);
-
-/* 
- 색깔별로 사과 카운트하기
-
- 결과 예시 : { 'red' : 8, 'green' : 13 }
-*/
-
-/*
-const resultObj = {};
-
-for (const apple of appleBasket) {
-  const color = apple.color;
-  // 이 컬러가 지금 처음등장한 컬러인지, 기존에 저장된 컬러인지
-  // 처음등장했으면 프로퍼티를 생성, 기존에 있던 컬러면 카운트값만 1추가
-  if (color in resultObj) { // in은 해당 키가 객체 안에 있는지 확인
-    resultObj[color]++;
-  } else {  // 해당 색깔이 처음 등장한 경우
-    resultObj[color] = 1;
-  }
-}
-
-console.log(resultObj);
-*/
-
-console.log('===================');
-
-const counter = appleBasket.reduce((countObj, apple) => { 
-  // console.log('countObj: ', countObj);
-  // console.log('apple: ', apple);
-  if (apple.color in countObj) { // 이미 있는 색상
-    countObj[apple.color]++;
-  } else { // 처음 나온 색상
-    countObj[apple.color] = 1;
-  }
-  return countObj;
-}, {});
-
-console.log(counter);
-
-
-console.log('===================');
-
-
-function myReduce(callbackFn, initialValue) {
-
-  // 어떤 값을 지속적으로 누적할 변수
-  let accumulator = initialValue !== undefined ? initialValue : appleBasket[0];
-  let startIndex = initialValue !== undefined ? 0 : 1;
-  for (let i = startIndex; i < appleBasket.length; i++) {
-    let currentValue = appleBasket[i];
-    accumulator = callbackFn(accumulator, currentValue);
-  }
-
-  return accumulator;
-}
-
-const total = appleBasket.reduce((sweetTotal, apple) => sweetTotal + apple.sweet, 0);
-console.log(`total: ${total}`);
+// 이름 가나다 순 정렬 (이름 오름차)
+userList.sort((a, b) => {
+  if (a.userName > b.userName) return 1;
+  else if (a.userName < b.userName) return -1;
+  else return 0;
+});
+console.log(userList);

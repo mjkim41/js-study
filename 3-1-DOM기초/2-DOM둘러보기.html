@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <ul id="fruits">
+    <li class="f-item">사과</li>
+    <li class="f-item">바나나</li>
+    <li class="f-item">포도</li>
+    <li class="f-item">복숭아</li>
+  </ul>
+
+
+  <!-- script 태그 : html 문서에 Javascript 코드를 사용할 때 쓰는 Tag -->
+ 
+<script>
+  console.log(document);
+  console.log(document.body);
+  /*
+    !!!!!!!!!!console.log(document.body.ul)이 작동하지 않는 이유!!!!!!!!!!!!!!!!!!!
+    : Const document 라는 객체안에 html, head, body  태그가 객체로 저장되어 있고,
+      ul은 ul이라는 객로 저장되어 있는 것이 아니라, body의 프로퍼티 키 중 children의 값으로 저장되어 있음
+    :따라서 이 경우 querySelector 이용할 것
+  */
+
+  // 클래스명 추가 (classList까지는 객체명이고, add는 함수임)
+  document.body.classList.add('하하하');
+
+  // ul에 접근하는 첫번째 방법 (children 이라는 property key 이용)
+  console.log(document.body.children[0]);
+  document.body.children[0].id = 'ㅋㅋㅋㅋㅋ';
+  document.body.children[0].children[0].textContent = 'textContent 수정';
+  document.body.children[0].children[0].style.color = 'red';
+  document.body.style.background = 'yellow';
+</script>
+
+</body>
+</html>
