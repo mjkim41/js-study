@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <ul id="fruits">
+    <li class="fr apple">사과</li>
+    <li class="fr banana">바나나</li>
+    <li class="fr grape">포도</li>
+  </ul>
+
+  <div class="box">
+    <p></p>
+  </div>
+
+  <script>
+    const $ul = document.getElementById('fruits');
+
+    // 자식 요소 탐색 : 부모요소노드.children
+    /* cf. children vs childrenNodes 
+       : children는 요소 노드(elements node)만 보여주는 반면,
+         childrenNodes는 텍스트 요소, 주석 노드 등을 포함.
+    */
+    const $listItems = [...$ul.children];
+    console.log($listItems);
+
+    // 첫번쨰 자식 "요소" 탐색 : 부모요소노드.firstElementChild
+    const $first = $ul.firstElementChild;
+    $first.style.fontSize = '2em';
+
+    // 마지막 자식 "요소" 탐색 : 부모요소노드.lastElementChild
+    const $last = $ul.lastElementChild;
+    $last.style.color = 'violet';
+
+    function hasChild($tag) {
+      // ************* !! : 0이면 false, 나머지는 true 반환해라
+      return !!$tag.children.length;
+    }
+
+    // 특정 태그에 자식이 있는지 여부 확인
+    const $box = document.querySelector('.box');
+    console.log(hasChild($box));
+    
+    
+  </script>
+</body>
+</html>

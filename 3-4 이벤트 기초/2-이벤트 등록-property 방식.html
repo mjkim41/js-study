@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div><button id="b1">클릭1</button></div>
+  <div><button id="b2">클릭2</button></div>
+  <div><button id="b3">클릭3</button></div>
+
+  <script>
+    const [$b1, $b2, $b3] = [...document.querySelectorAll('button')];
+
+    // 이벤트 핸들러
+    function sayHelloHandler() {
+      alert('Hello, guys!');
+    }
+
+    // 이벤트 바인딩 // 콜하면 안 됨 
+    $b1.onclick = sayHelloHandler;
+  
+    // 일회용이면 이벤트 바인딩할 때 함수를 만들어도 됨
+    $b2.ondblclick = function() {
+      $b2.style.width = '500px';
+    };
+
+
+    // css의 hover 기능
+    $b3.onmouseover = () => {
+      $b3.style.background = 'red';
+    };
+    $b3.onmouseout = () => {
+      $b3.style.background = 'yellow';
+    };
+
+    // property 방식의 단점 :
+    // 같은 종류의 이벤트에 여러 핸들러를 바인딩할 수 없음
+    $b3.onmouseout = () => {
+      $b3.textContent = '메롱';
+    };
+
+
+  </script>
+</body>
+</html>

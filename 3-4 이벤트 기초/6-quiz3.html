@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>버튼 클릭 시 이미지 크기 조절</title>
+  <style>
+    #image {
+      width: 100px;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="btn-group">
+    <button id="increaseSize">이미지 크기 증가</button>
+    <button id="decreaseSize">이미지 크기 감소</button>
+  </div>
+  <img id="image" src="https://image.yes24.com/goods/105982287/XL" alt="이미지">
+  
+  <script>
+  // 가로세로가 증가시 20씩 증가 감소시 20씩 감소
+  // 최대 300까지만 커지고 최소 20까지만 작아짐
+  const $image = document.querySelector('#image');
+  const $increaseSize = document.querySelector('#increaseSize');
+  const $decreaseSize = document.querySelector('#decreaseSize');
+  
+  
+  const increaseSize = () => {
+    let currentWidth = parseInt(window.getComputedStyle($image).width, 10);
+    $image.style.width = (currentWidth + 20) + 'px'};
+    
+  $increaseSize.addEventListener('click', increaseSize);
+  
+  console.log($image);
+  console.log($increaseSize);
+  console.log($decreaseSize);
+
+ </script>
+
+</body>
+</html>
