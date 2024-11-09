@@ -72,20 +72,32 @@
     const $prevBtn = document.getElementById('prev');
     const $image = document.getElementById('image');
 
-    let currentImgIndex = images.indexOf($image.getAttribute('src'));
-    console.log(currentImgIndex);
+    // $nextBtn.addEventListener('click', nextFunction);
+    // $prevBtn.addEventListener('click', prevFunction);
+   
+    $nextBtn.addEventListener('click', nextFunction);
+    $prevBtn.addEventListener('click', prevFunction);
+   
+    let currentImg = $image.src;
+    let currentImgIdx = images.indexOf(currentImg);
+    console.log(currentImgIdx);
+    
+    function nextFunction() {
+      if (currentImgIdx < images.length-1) {
+       $image.src = images[currentImgIdx+1];
+       currentImgIdx++; // !!! $image.src 값은 초기 세팅값이므로 안 변함
+     }    
+    }
 
-    $nextBtn.addEventListener('click', () => {
-      $image.setAttribute('src', images[currentImgIndex+1]);
-      currentImgIndex++;
-    });
-
-    $prevBtn.addEventListener('click', () => {
-      $image.setAttribute('src', images[currentImgIndex-1])
-      currentImgIndex--;
-    });
-
-
+    function prevFunction() {
+      if (currentImgIdx >= 1) {
+       $image.src = images[currentImgIdx-1];
+       currentImgIdx--; // !!! $image.src 값은 초기 세팅값이므로 안 변함
+     }    
+    }
+    
+    
+    console.log(images[1]);
     console.log($nextBtn);
     console.log($prevBtn);
     console.log($image);
