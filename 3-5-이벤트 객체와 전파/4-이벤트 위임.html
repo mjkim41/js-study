@@ -48,7 +48,7 @@
     $fruits.addEventListener('click', e => {
 
       // 조건으로 li을 클릭하지 않으면 함수를 강제 종료 하도록 만듬(=ul를 클릭하면 아래 작업 일어나지 않도록)
-      // matches('css selector') : 선택자와 일이차면 true
+      //!!!!!!  matches('css selector') : 선택자와 일이차면 true
       if (!e.target.matches('#fruits li')) {
         return; // 강제 종료 
       }

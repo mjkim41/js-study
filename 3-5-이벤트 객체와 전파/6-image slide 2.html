@@ -93,7 +93,7 @@
       'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D'
     ];
 
-    //  배열에 저장된 이미지 경로 개수만큼 img 태그 생성해서
+    // !!!!! 배열에 저장된 이미지 경로 개수만큼 img 태그 생성해서
     //  화면(#thumbnails)에 렌더링
     const $thumbnails = document.getElementById('thumbnails');
     
@@ -107,6 +107,7 @@
       // 1. 인덱스를 태그의 dataset에 저장해두기
       $newImg.dataset.index = i;
     })
+    // !!!!!! 끝
 
     const [$prev, $image, $next] 
       = [...document.getElementById('slider').children];
