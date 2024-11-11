@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id='timeout'>1초 후 메시지 보기</button>
+  <p class="msg"></p>
+
+  <script>
+    document.getElementById('timeout').addEventListener('click',() => {
+
+      setTimeout(() => {
+        document.querySelector('.msg').textContent = '1초가 지났습니다';
+      }
+    , 1000);
+    });
+  </script>
+</body>
+</html>

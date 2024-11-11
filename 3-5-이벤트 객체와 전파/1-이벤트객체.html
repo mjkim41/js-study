@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p>아무 곳이나 클릭하세요</p>
+  <em class="msg"></em>
+
+  <hr>
+
+  <input type="text" id="txt">
+  <p class="show"></p>
+
+  <script>
+    // shift key 누른 상태에서 화면 클릭하면 msg 클래스에 x, y 좌표 표시
+    document.addEventListener('click', function(e) {
+      const $msg = document.querySelector('.msg');
+
+      if (e.shiftKey) {
+        $msg.textContent = `x: ${e.x}, y: ${e.y}`;
+      } else {
+        $msg.textContent = '';
+      }
+    });
+
+    // input 태그에 글자 입력 후 엔터까지 치면 p태그에 입력 내용 보이게
+    const $txtInput = document.getElementById('txt');
+
+    $txtInput.addEventListener('keyup', (e) => {
+      console.log(e);
+      
+      const $show = document.querySelector('.show');
+
+      if (e.key === 'Enter') {
+        $show.textContent = $txtInput.value;
+        $txtInput.value = '';
+      }
+    });
+
+  </script>
+</body>
+</html>

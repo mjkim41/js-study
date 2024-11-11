@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p class="msg"></p>
+
+  <script>
+    const $msg = document.querySelector('.msg');
+
+    // 현재 시간을 화면에 띄우기
+    setInterval(() => {
+      const now = new Date(); // 현재 시간 읽기
+      $msg.textContent = now.toLocaleTimeString();
+    }, 1000);
+    // // setInterval
+    // setInterval(() => {
+    //   $msg.textContent += `Hola, buenas~\n`;
+    // }, 1200);
+
+    // setInterval(() => {
+    //   console.log('hello!');
+    // }, 2000);
+  </script>
+</body>
+</html>

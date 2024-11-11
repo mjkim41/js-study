@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <button id="start">시작</button>
+  <button id="stop">정지</button>
+  <p>시간: <span id="timer">0</span>초</p>
+
+  <script>
+    const $startBtn = document.getElementById('start');
+    const $stopBtn = document.getElementById('stop');
+
+    let intervalId = null;
+    let startTime = 0;  // 시작 시간
+    let elapsedTime = 0; // 중지된 시점까지의 경과 시간
+
+    // 시작 버튼 클릭 시
+    $startBtn.addEventListener('click', e => {
+      // 이미 인터벌이 진행중이면 더 이상 시작하지 않도록
+      if (intervalId) {
+        return;
+      }
+
+      // 만약 stop 버튼을 눌러서 중지된 경우, 그 시점부터 다시 시작
+      startTime = new Date() - elapsedTime; // 이전의 경과 시간을 고려하여 새로운 시작 시간 설정
+
+      intervalId = setInterval(() => {
+        const now = new Date();
+        const currentElapsedTime = now - startTime; // 경과 시간 계산
+        const $timerSpan = document.getElementById('timer');
+        $timerSpan.textContent = (currentElapsedTime / 1000).toFixed(3); // 초 단위로 출력
+      }, 1);
+    });
+
+    // 정지 버튼 클릭 시
+    $stopBtn.addEventListener('click', e => {
+      clearInterval(intervalId); // 인터벌 취소
+      intervalId = null; // 인터벌 id 초기화
+
+      const endTime = new Date();
+      elapsedTime = endTime - startTime; // 경과 시간을 저장
+      console.log(`경과시간: ${(elapsedTime / 1000).toFixed(3)}초`);
+    });
+
+  </script>
+
+</body>
+</html>
