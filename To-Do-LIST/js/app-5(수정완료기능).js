@@ -22,7 +22,6 @@ let todos = [
 const $todoListUl = document.querySelector('.todo-list');
 const $addBtn = document.getElementById('add');
 const $todoTextInput = document.getElementById('todo-text');
-let isModifying = false;
 
 //========= 함수 정의 영역 ========//
 
@@ -126,8 +125,7 @@ function todoDoneHandler(e) {
 // 수정 모드 진입 이벤트 핸들러
 function todoEnterModifyModeHandler(e) {
   if (!e.target.matches('.modify span.lnr-undo')) return;
-  if (isModifying) return;
-  isModifying = true;
+
   /*
     1. span.text를 input.modify-input으로 교체
      - 클릭한 버튼 근처에 있는 span.text를 탐색
@@ -158,7 +156,6 @@ function todoModifyHandler(e) {
   // !!!!! 아래 조건 걸 때, 위의 수정 모드 핸들러 아이콘 교체에 setTimeout을 안 걸면
   // 아이콘 교체가 밑의 조건 보다 빨리 되어서 e.target이 바뀐 후 아이콘으로 인식됨!!!!
   if (!e.target.matches('.modify span.lnr-checkmark-circle')) return;
-  isModifying = false;
   /*
     1. 배열에 접근해서 text프로퍼티를 새로운 값으로 수정
     - 클릭한 태그 근처에 있는 data-id를 확보
