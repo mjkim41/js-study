@@ -20,6 +20,7 @@
         xhr.open('GET', url); // 요청 세팅
         xhr.send();           // 요청 보내기
         xhr.addEventListener('load', e => { // 응답 데이터 가져오기
+          console.log(xhr);
           const responseData = JSON.parse(xhr.responseText);
           resolve(responseData);
         });
