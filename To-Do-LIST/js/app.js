@@ -1,4 +1,8 @@
 //========= 전역 변수 영역 ========//
+
+// 현재 수정모드에 들어갔는지 여부
+let isEnterMode = false;
+
 // 서버와 통신할 데이터
 let todos = [
   {
@@ -22,9 +26,22 @@ let todos = [
 const $todoListUl = document.querySelector('.todo-list');
 const $addBtn = document.getElementById('add');
 const $todoTextInput = document.getElementById('todo-text');
-let isModifying = false;
 
 //========= 함수 정의 영역 ========//
+
+// 로컬 스토리지에 todos배열 저장해두기
+function saveTodos() {
+  localStorage.setItem('todoList', JSON.stringify(todos));
+}
+
+// 로컬 스토리에서 todos 불러와서 렌더링
+function loadTodos() {
+  const todosJson = localStorage.getItem('todoList');
+  if (todosJson) {
+    todos = JSON.parse(todosJson);
+  }
+  renderTodos();
+}
 
 // todos배열을 화면에 렌더링해주는 함수
 function renderTodos() {
@@ -58,6 +75,9 @@ function renderTodos() {
 
     // 7. ul에 li 추가하기
     $todoListUl.append($li);
+
+    // 로컬스토리지에 저장
+    saveTodos();
   });
 }
 
@@ -125,9 +145,9 @@ function todoDoneHandler(e) {
 
 // 수정 모드 진입 이벤트 핸들러
 function todoEnterModifyModeHandler(e) {
-  if (!e.target.matches('.modify span.lnr-undo')) return;
-  if (isModifying) return;
-  isModifying = true;
+  if (isEnterMode || !e.target.matches('.modify span.lnr-undo')) return;
+
+  isEnterMode = true;
   /*
     1. span.text를 input.modify-input으로 교체
      - 클릭한 버튼 근처에 있는 span.text를 탐색
@@ -154,11 +174,10 @@ function todoEnterModifyModeHandler(e) {
   }, 0);
 }
 
+// 수정 완료 처리
 function todoModifyHandler(e) {
-  // !!!!! 아래 조건 걸 때, 위의 수정 모드 핸들러 아이콘 교체에 setTimeout을 안 걸면
-  // 아이콘 교체가 밑의 조건 보다 빨리 되어서 e.target이 바뀐 후 아이콘으로 인식됨!!!!
+  
   if (!e.target.matches('.modify span.lnr-checkmark-circle')) return;
-  isModifying = false;
   /*
     1. 배열에 접근해서 text프로퍼티를 새로운 값으로 수정
     - 클릭한 태그 근처에 있는 data-id를 확보
@@ -169,7 +188,6 @@ function todoModifyHandler(e) {
   */
   const $li = e.target.closest('.todo-list-item');
   const dataId = $li.dataset.id;
-  // filter를 통해서 찾으면 foundTodo.id = 1 이런 식으로 객체 프로퍼티 값 변경 불가능. velog 메모 내용 참고!!!
   const foundTodo = todos.find(todo => todo.id === dataId);
   const $textInput = $li.querySelector('.modify-input');
   const newText = $textInput.value;
@@ -177,6 +195,8 @@ function todoModifyHandler(e) {
   foundTodo.text = newText;
 
   renderTodos();
+
+  isEnterMode = false;
   
 }
 //========= 이벤트 핸들러 등록 영역 ========//
@@ -197,4 +217,4 @@ $todoListUl.addEventListener('click', todoModifyHandler);
 /*
   - todos배열에 있는 객체들을 화면에 그려야 함
 */
-renderTodos();
+loadTodos();

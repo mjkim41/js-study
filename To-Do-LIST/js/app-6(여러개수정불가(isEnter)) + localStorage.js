@@ -1,6 +1,6 @@
 //========= 전역 변수 영역 ========//
 
-// 현재 수정 모드에 들어갔는지 여부 
+// 현재 수정모드에 들어갔는지 여부
 let isEnterMode = false;
 
 // 서버와 통신할 데이터
@@ -28,6 +28,20 @@ const $addBtn = document.getElementById('add');
 const $todoTextInput = document.getElementById('todo-text');
 
 //========= 함수 정의 영역 ========//
+
+// 로컬 스토리지에 todos배열 저장해두기
+function saveTodos() {
+  localStorage.setItem('todoList', JSON.stringify(todos));
+}
+
+// 로컬 스토리에서 todos 불러와서 렌더링
+function loadTodos() {
+  const todosJson = localStorage.getItem('todoList');
+  if (todosJson) {
+    todos = JSON.parse(todosJson);
+  }
+  renderTodos();
+}
 
 // todos배열을 화면에 렌더링해주는 함수
 function renderTodos() {
@@ -61,6 +75,9 @@ function renderTodos() {
 
     // 7. ul에 li 추가하기
     $todoListUl.append($li);
+
+    // 로컬스토리지에 저장
+    saveTodos();
   });
 }
 
@@ -128,11 +145,9 @@ function todoDoneHandler(e) {
 
 // 수정 모드 진입 이벤트 핸들러
 function todoEnterModifyModeHandler(e) {
-  if (!e.target.matches('.modify span.lnr-undo')) return;
+  if (isEnterMode || !e.target.matches('.modify span.lnr-undo')) return;
 
-  if (isEnterMode) return;
   isEnterMode = true;
-
   /*
     1. span.text를 input.modify-input으로 교체
      - 클릭한 버튼 근처에 있는 span.text를 탐색
@@ -159,6 +174,7 @@ function todoEnterModifyModeHandler(e) {
   }, 0);
 }
 
+// 수정 완료 처리
 function todoModifyHandler(e) {
   
   if (!e.target.matches('.modify span.lnr-checkmark-circle')) return;
@@ -179,6 +195,8 @@ function todoModifyHandler(e) {
   foundTodo.text = newText;
 
   renderTodos();
+
+  isEnterMode = false;
   
 }
 //========= 이벤트 핸들러 등록 영역 ========//
@@ -199,4 +217,4 @@ $todoListUl.addEventListener('click', todoModifyHandler);
 /*
   - todos배열에 있는 객체들을 화면에 그려야 함
 */
-renderTodos();
+loadTodos();
