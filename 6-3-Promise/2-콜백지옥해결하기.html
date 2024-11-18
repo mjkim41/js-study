@@ -71,6 +71,7 @@
         xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
         xhr.onload = () => {
           if (xhr.status === 200) {
+            console.log(xhr);
             resolve(JSON.parse(xhr.responseText)); // 성공적으로 데이터 가져오기
           } else {
             reject("데이터를 가져오는 데 실패했습니다.");

@@ -1,92 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>스크롤 애니메이션 예제</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #6a11cb, #2575fc);
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .header {
-      width: 100%;
-      padding: 50px 0;
-      text-align: center;
-      color: white;
-      font-size: 32px;
-      font-weight: bold;
-      background-color: rgba(0, 0, 0, 0.2);
-      margin-bottom: 30px;
-    }
-    .container {
-      width: 90%;
-      max-width: 600px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      padding: 20px;
-    }
-    .content-item {
-      padding: 30px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      font-size: 24px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-    .content-item.animate {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스크롤 애니메이션 예제</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #6a11cb, #2575fc);
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .header {
+        width: 100%;
+        padding: 50px 0;
+        text-align: center;
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        background-color: rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+      .container {
+        width: 90%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px;
+      }
+      .content-item {
+        padding: 30px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: 24px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .content-item.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">스크롤 애니메이션 예제</header>
 
-  <header class="header">스크롤 애니메이션 예제</header>
+    <div class="container">
+      <div class="content-item">콘텐츠 1</div>
+      <div class="content-item">콘텐츠 2</div>
+      <div class="content-item">콘텐츠 3</div>
+      <div class="content-item">콘텐츠 4</div>
+      <div class="content-item">콘텐츠 5</div>
+      <div class="content-item">콘텐츠 6</div>
+      <div class="content-item">콘텐츠 7</div>
+      <div class="content-item">콘텐츠 8</div>
+    </div>
 
-  <div class="container">
-    <div class="content-item">콘텐츠 1</div>
-    <div class="content-item">콘텐츠 2</div>
-    <div class="content-item">콘텐츠 3</div>
-    <div class="content-item">콘텐츠 4</div>
-    <div class="content-item">콘텐츠 5</div>
-    <div class="content-item">콘텐츠 6</div>
-    <div class="content-item">콘텐츠 7</div>
-    <div class="content-item">콘텐츠 8</div>
-  </div>
+    <script>
 
-  <script>
-
-    // 특정 태그를 감지하기 위해 옵저버를 생성
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          observer.unobserve(entry.target); // 애니메이션이 완료되면 더 이상 감시하지 않음
-        }
-      }); // end foreach
-    }, { 
-      threshold: 0.5   
-    }); // 요소가 50% 보일 때 애니메이션 시작
-
-    // 모든 content-item 요소를 감시 대상으로 추가
-    const contentItems = document.querySelectorAll('.content-item');
-    contentItems.forEach(item => observer.observe(item));
-
-  </script>
-
-</body>
+      /*
+         원리 : IntersectionObserver를 활용하여,
+                isIntersecting이면 opacity를 0에서 1로 조정한다.
+      */
+      // 밑에 작업을 하려면 콘텐츠 박스를 변수로 저장해야 한다.
+      const $contentItems = [...document.querySelector('.container').children];
+      console.log($contentItems);      
+      // Intersection Observer를 만든다.
+      //    - 이 때, observer할 대상은 각 박스인데,
+      //      observe 함수는 한 번에 대상을 한 개씩 밖에 지정을 못하므로
+      //      for Each를 돌려서 observe 대상으로 지정해 준다.
+      const observer = new IntersectionObserver(entries => {
+        console.log(entries);
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            observer.unobserve(entry.target);
+          }
+        })
+      
+      }, {threshold: 0.2});
+      $contentItems.forEach($contentItem => {
+        observer.observe($contentItem);
+      })
+      
+    </script>
+  </body>
 </html>
