@@ -155,24 +155,36 @@
 
     <script>
       // ============ 전역 변수
-      const $sRateAElement = document.getElementById('s_rate');
-      const $movieListClearfix = document.querySelector('.movie-list.clearfix')
+      const $sRateAElement = document.getElementById("s_rate");
+      const $movieListClearfix = document.querySelector(".movie-list.clearfix");
       const url = `https://yts.mx/api/v2/`;
-      const $modalTitle = document.querySelector('.modal-title');
+      const $modalTitle = document.querySelector(".modal-title");
+      const $modalImage = document.querySelector(".modal-body img");
+      const $movieDescription = document.querySelector(
+        "div.modal-body p.movie-description"
+      );
+      let limit = 20;
+      let page = localStorage.getItem("page") ? parseInt(localStorage.getItem("page")) : 1;
 
       // ================ 함수 ================
-      // 1-1. renderByDownload()
+      // 1. renderByDownload()
       async function renderByDownload() {
         // api에 연결
-        const downloadByCount = 'list_movies.json/sort_by=download_count';
-        let response = await fetch(`${url}${downloadByCount}`);
+        const downloadByCount = "list_movies.json/sort_by=download_count";
+        let response = await fetch(
+          `${url}${downloadByCount}&limit=${limit}&page=${page}`
+        );
         let JasonResponse = await response.json();
         let moviesData = JasonResponse.data.movies;
+        console.log(moviesData);
+        page = page + 1;
+        localStorage.setItem("page", page);
 
         // 태그 생성
-        moviesData.forEach(movie => {
-          const $div = document.createElement('div');
-          $div.classList.add('movie');
+        for (let movie of moviesData) {
+          const $div = document.createElement("div");
+          $div.classList.add("movie");
+          $div.dataset.id = movie.id;
           $div.innerHTML = `
             <div class="img-box">
                 <img src="${movie.large_cover_image}" alt="표지사진">
@@ -183,41 +195,81 @@
                 <div class="rating">${movie.rating}</div>
               </div>
             `;
-            $movieListClearfix.append($div);
-            console.log(movie.description_full);
-        });
+          $movieListClearfix.append($div);
+          console.log(movie.description_full);
+        }
+      }
 
-        // 영화 클릭 시 영화 상세정보 모달 이벤트
-        $movieListClearfix.addEventListener('click', showMovieDetail);
-      };
+      // 디바운스 함수 정의
+      function debounce(callbackFn, delay) {
+        let timerId = null;
 
-
-
+        function helper(...param) {
+          clearTimeout(timerId); // 기존 타이머가 있다면 해제
+          timerId = setTimeout(() => {
+            // 실행해야할 코드
+            callbackFn(...param);
+          }, delay);
+        }
+        return helper;
+      }
 
       // ============ 이벤트 핸들러 ============
       // 1. 다운로드 순 버튼 클릭 시 발생하는 이벤트 핸들러(1-1)
       function sRateHandler(e) {
         renderByDownload();
-      };
+      }
 
       // 2. 영화 상세정보 이벤트 핸들러
-      function showMovieDetail(e, moviesData) {
-        if (!e.target.closest('div.clearfix div.movie')) return;
-        // 뭐여?????????
-        const myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+      async function showMovieDetail(e, moviesData) {
+        if (!e.target.closest("div.clearfix div.movie")) return;
+        // 모달 활성화
+        const myModal = new bootstrap.Modal(
+          document.getElementById("detailModal")
+        );
         myModal.show();
-        const $closestMovieContainer = e.target.closest('div.clearfix div.movie');
+        const $closestMovieContainer = e.target.closest(
+          "div.clearfix div.movie"
+        );
         // fetch해서 정보 가져오기
-        console.log(movieData);
-        // fetch(`${url}movie_details.json?movie_id=${movieId}&width_cast=true`);
+        const $closestDiv = e.target.closest("div.clearfix div.movie");
+        const closestDivId = $closestDiv.dataset.id;
+        const response = await fetch(
+          `${url}movie_details.json?movie_id=${closestDivId}`
+        );
+        const { data } = await response.json();
+        console.log(data);
+        // 모달 내용 수정
+        console.log($modalTitle.textContent);
+        $modalTitle.textContent = data.movie.title;
+        $modalImage.setAttribute("src", data.movie.large_cover_image);
+        $movieDescription.textContent = data.movie.description_full;
       }
-      
 
+      // 무한 스크롤
+      function loadMorHandler(e) {
+        const scrollY = window.scrollY;
+        const innerHeight = window.innerHeight;
+        const offsetHeight = document.body.offsetHeight;
+
+        if (scrollY + innerHeight + 100 >= offsetHeight) {
+          console.log("다음");
+          renderByDownload();
+        }
+      }
 
       //  ==================== 이벤트 등록 =====================
       // 다운로드 순 영화 렌더링 이벤트
-      $sRateAElement.addEventListener('click', sRateHandler);
+      $sRateAElement.addEventListener("click", sRateHandler);
 
+      // 2. 영화 클릭 시 영화 상세정보 모달 이벤트
+      $movieListClearfix.addEventListener("click", showMovieDetail);
+      
+      // 3. 스크롤 시 로드 이벤트
+      window.addEventListener("scroll", debounce(loadMorHandler, 1000));
+
+      // ============= 실행 ====================
+      renderByDownload();
 
     </script>
   </body>
